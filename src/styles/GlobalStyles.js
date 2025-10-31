@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyles = createGlobalStyle`
+  html { scroll-behavior: smooth; }
   :root{
     --maxw: 1200px;
   }

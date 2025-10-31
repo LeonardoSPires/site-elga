@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FiMenu, FiX } from 'react-icons/fi';
+import ImgLogo from '../assets/logo-elga.png';
 
 const Nav = styled.nav`
   position: sticky;
@@ -9,6 +10,16 @@ const Nav = styled.nav`
   background: rgba(255,255,255,0.9);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid #eee;
+`;
+
+const LogoLink = styled.a`
+  display: inline-flex;
+  align-items: center;
+`;
+const LogoNav = styled.img`
+  height: 40px;
+  border-radius: 50%;
+  display: block;
 `;
 
 const Wrap = styled.div`
@@ -63,6 +74,9 @@ export default function Navbar(){
   return (
     <Nav>
       <Wrap>
+        <LogoLink href="#home" aria-label="Início">
+          <LogoNav src={ImgLogo} alt="Logo Elga Cordeiro Costa" loading="lazy" />
+        </LogoLink>
         <Brand href="#home">Elga Cordeiro Costa</Brand>
         <MenuBtn onClick={toggle} aria-label="menu">{open ? <FiX/> : <FiMenu/>}</MenuBtn>
         <Links open={open} onClick={close}>

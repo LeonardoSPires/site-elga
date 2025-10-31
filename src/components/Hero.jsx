@@ -63,7 +63,7 @@ export default function Hero() {
     <Wrap id="home" role="banner">
       <Container>
         <Content>
-          <Title>Desperte o melhor da sua equipe</Title>
+          <Title>Desperte o seu melhor!</Title>
           <Subtitle>
             Elga Cordeiro Costa é palestrante motivacional com foco em propósito,
             produtividade e cultura positiva.

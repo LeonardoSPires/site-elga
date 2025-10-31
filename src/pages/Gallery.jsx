@@ -30,12 +30,12 @@ const Tile = styled.figure`
     height: 100%;
     object-fit: cover;
     transition: transform .35s ease;
-    display: block;filter: blur(2px);
+    display: block;
+    filter: blur(1.5px);
   }
   &:hover 
   img{ 
     transform: scale(1.05); 
-    filter: blur(1.5px);
     }
 `;
 
