@@ -125,7 +125,7 @@ export default function About(){
 
             <p style={{ position: 'relative', zIndex: 1 }}>
               Formada e especialista em Inteligência Emocional, Neuro Ciência, Liderança Positiva, Elga acredita que
-              a verdadeira mudança começa dentro de cada um de nós. Como se trata de uma especialista em Freemind (Dr. Algusto Cury) sua abordagem prática e empática ajuda equipes a
+              a verdadeira mudança começa dentro de cada um de nós. Por ser uma especialista em Freemind (Dr. Algusto Cury) sua abordagem prática e empática ajuda equipes a
               redescobrirem o propósito, enxergarem oportunidades em meio aos desafios e cultivarem uma cultura de
               colaboração e entusiasmo.
             </p>
