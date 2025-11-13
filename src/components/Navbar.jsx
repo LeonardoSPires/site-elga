@@ -1,21 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { FiMenu, FiX } from 'react-icons/fi';
 import ImgLogo from '../assets/logo-elga.png';
 
 const Nav = styled.nav`
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   z-index: 50;
-  background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid #eee;
+  transition: background 0.35s ease, border-color 0.35s ease;
+
+  /* estado inicial: totalmente transparente */
+  background: ${({ scrolled }) =>
+    scrolled ? 'rgba(255,255,255,0.95)' : 'transparent'};
+  border-bottom: ${({ scrolled }) =>
+    scrolled ? '1px solid #e5e7eb' : '1px solid transparent'};
+
+  /* blur só quando for branco */
+  ${({ scrolled }) =>
+    scrolled &&
+    `
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    `}
 `;
 
 const LogoLink = styled.a`
   display: inline-flex;
   align-items: center;
 `;
+
 const LogoNav = styled.img`
   height: 40px;
   border-radius: 50%;
@@ -39,8 +53,15 @@ const Brand = styled.a`
 
 const MenuBtn = styled.button`
   display: none;
-  @media (max-width: 900px){ display: inline-flex; align-items: center; gap: .25rem; }
-  background: transparent; border: none; font-size: 1.5rem; cursor: pointer;
+  @media (max-width: 900px){
+    display: inline-flex; 
+    align-items: center; 
+    gap: .25rem;
+  }
+  background: transparent; 
+  border: none; 
+  font-size: 1.5rem; 
+  cursor: pointer;
 `;
 
 const Links = styled.ul`
@@ -49,6 +70,7 @@ const Links = styled.ul`
   list-style: none;
   margin: 0;
   padding: 0;
+
   @media (max-width: 900px){
     position: fixed;
     inset: 0 0 auto 0;
@@ -69,16 +91,33 @@ const LinkItem = styled.a`
 
 export default function Navbar(){
   const [open, setOpen] = useState(false);
-  const toggle = () => setOpen(o=>!o);
+  const [scrolled, setScrolled] = useState(false);
+
+  const toggle = () => setOpen(o => !o);
   const close = () => setOpen(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <Nav>
+    <Nav scrolled={scrolled}>
       <Wrap>
         <LogoLink href="#home" aria-label="Início">
           <LogoNav src={ImgLogo} alt="Logo Elga Cordeiro Costa" loading="lazy" />
         </LogoLink>
+
         <Brand href="#home">Elga Cordeiro Costa</Brand>
-        <MenuBtn onClick={toggle} aria-label="menu">{open ? <FiX/> : <FiMenu/>}</MenuBtn>
+
+        <MenuBtn onClick={toggle} aria-label="menu">
+          {open ? <FiX/> : <FiMenu/>}
+        </MenuBtn>
+
         <Links open={open} onClick={close}>
           <li><LinkItem href="#sobre">Sobre</LinkItem></li>
           <li><LinkItem href="#frases">Frases</LinkItem></li>
@@ -88,5 +127,5 @@ export default function Navbar(){
         </Links>
       </Wrap>
     </Nav>
-  )
+  );
 }

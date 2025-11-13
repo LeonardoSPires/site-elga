@@ -1,21 +1,28 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Button, Container } from './ui';
-import heroImg from '../assets/foto-home.jpeg';
+import heroImg from '../assets/foto-banner-hero.jpg';
 import { FaInstagram, FaFacebook, FaTiktok } from 'react-icons/fa';
 
 const Wrap = styled.div`
+  height: 100vh;
   position: relative;
   min-height: 72vh;
   display: grid;
   align-items: center;
+  ;
   background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)),
     url(${heroImg}) center/cover no-repeat;
   color: white;
+
+  @media (max-width: 900px) { 
+    background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)),
+    url(${heroImg}) right no-repeat;
+   }
 `;
 
 const Content = styled.div`
-  padding: 23rem 1rem 1rem 1rem;
+  padding: 18rem 1rem 1rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,27 +72,27 @@ export default function Hero() {
         <Content>
           <Title>Desperte o seu melhor!</Title>
           <Subtitle>
-            Elga Cordeiro Costa é palestrante motivacional com foco em propósito,
+            Palestrante motivacional com especialidade em Freemind (Dr. Augusto Cury) ,
             produtividade e cultura positiva.
           </Subtitle>
 
           <Socials>
             <a
-              href="https://www.instagram.com/"
+              href="https://www.instagram.com/elgapsic?igsh=MXBzaTlocDQ4Mm5tdg==/#"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaInstagram />
             </a>
             <a
-              href="https://www.tiktok.com/"
+              href="https://vt.tiktok.com/ZSy75f8XC/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <FaTiktok />
             </a>
             <a
-              href="https://www.facebook.com/"
+              href="https://www.facebook.com/share/1bSQHE7AL5/?mibextid=wwXIfr"
               target="_blank"
               rel="noopener noreferrer"
             >

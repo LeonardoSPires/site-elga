@@ -23,7 +23,7 @@ export const theme = {
   primary: '#0b6cff',
   secondary: '#111827',
   accent: '#f59e0b',
-  background: '#ffffff',
+  background: '#fff',
   text: '#111827',
   muted: '#6b7280',
   surface: '#f5f7fb'

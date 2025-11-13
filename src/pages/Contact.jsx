@@ -1,6 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { Container, Section, Button } from '../components/ui';
+import contactBg from '../assets/foto-contato.jpeg';
+
+const ContactWrap = styled(Section)`
+  position: relative;
+  background: url(${contactBg}) center/cover no-repeat;
+  padding: 4rem 0;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+`;
 
 const Form = styled.form`
   display: grid;
@@ -32,13 +52,13 @@ const Input = styled.input`
   transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: ${({theme}) => theme.primary}22; /* leve azul claro no hover */
+    background-color: ${({theme}) => theme.primary}22;
   }
 
   &:focus {
-    border-color: ${({theme}) => theme.primary}; /* mantém o border azul no foco */
+    border-color: ${({theme}) => theme.primary};
     box-shadow: 0 0 0 4px rgba(11,108,255,.08);
-    background-color: white; /* fundo volta ao normal ao clicar */
+    background-color: white;
   }
 `;
 
@@ -52,6 +72,7 @@ const Textarea = styled.textarea`
   outline: none;
   background-color: white;
   transition: background-color 0.3s ease;
+
 
   &:hover {
     background-color: ${({theme}) => theme.primary}22;
@@ -91,6 +112,7 @@ const Toast = styled.div`
 
 export default function Contact() {
   const [sent, setSent] = useState(false);
+  const [sending, setSending] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     company: '',
@@ -105,17 +127,46 @@ export default function Contact() {
     setFormData(prev => ({ ...prev, [name]: value }));
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    setSent(true);
-    setFormData({
-      name: '',
-      company: '',
-      email: '',
-      phone: '',
-      date: '',
-      message: '',
-    });
+    setSending(true);
+
+    try {
+      const response = await fetch(
+        'https://formsubmit.co/ajax/elgacosta218@gmail.com',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            Nome: formData.name,
+            Empresa: formData.company,
+            Email: formData.email,
+            Telefone: formData.phone,
+            DataEvento: formData.date,
+            Mensagem: formData.message,
+            _subject: 'Novo contato pelo site - Elga',
+            _template: 'table',
+          }),
+        }
+      );
+
+      if (response.ok) {
+        setSent(true);
+        setFormData({
+          name: '',
+          company: '',
+          email: '',
+          phone: '',
+          date: '',
+          message: '',
+        });
+      }
+    } finally {
+      setSending(false);
+    }
   }
 
   useEffect(() => {
@@ -126,66 +177,38 @@ export default function Contact() {
   }, [sent]);
 
   return (
-    <Section id="contato" bg="#f9fafb">
+    <ContactWrap id="contato">
       <Container>
-        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Convide a Elga</h2>
-        <p style={{ textAlign: 'center', color: '#6b7280', marginTop: 0, marginBottom: '1.25rem' }}>
+        <h1 style={{ textAlign: 'center', marginBottom: '1rem', textShadow: '2px 2px white' }}>Convide a Elga</h1>
+        <h3 style={{ textAlign: 'center', color: '#444546', marginTop: 0, marginBottom: '1.25rem', fontWeight: '600', textShadow: '1.5px 1.5px white', fontSize: '1rem' }}>
           Preencha o formulário e conte sobre seu evento. Responderemos em breve.
-        </p>
+        </h3>
+
         <Form onSubmit={handleSubmit}>
           <Row>
-            <Input
-              required
-              placeholder="Seu nome"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-            <Input
-              required
-              placeholder="Empresa / Organização"
-              name="company"
-              value={formData.company}
-              onChange={handleChange}
-            />
+            <Input required placeholder="Seu nome" name="name" value={formData.name} onChange={handleChange}/>
+            <Input required placeholder="Empresa / Organização" name="company" value={formData.company} onChange={handleChange}/>
           </Row>
+
           <Row>
-            <Input
-              required
-              placeholder="E-mail"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-            <Input
-              placeholder="Telefone / WhatsApp"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-            />
+            <Input required placeholder="E-mail" type="email" name="email" value={formData.email} onChange={handleChange}/>
+            <Input placeholder="Telefone / WhatsApp" name="phone" value={formData.phone} onChange={handleChange}/>
           </Row>
-          <Input
-            placeholder="Data ou período do evento"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-          />
-          <Textarea
-            placeholder="Conte um pouco sobre o público, objetivo e duração desejada."
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-          />
-          <Submit type="submit">Enviar</Submit>
+
+          <Input placeholder="Data ou período do evento" name="date" value={formData.date} onChange={handleChange}/>
+          <Textarea placeholder="Conte um pouco sobre o público, objetivo e duração desejada." name="message" value={formData.message} onChange={handleChange}/>
+
+          <Submit type="submit" disabled={sending}>
+            {sending ? 'Enviando...' : 'Enviar'}
+          </Submit>
         </Form>
-        <p style={{ textAlign: 'center', marginTop: '1rem' }}>
-          Se preferir, envie um e-mail para{' '}
-          <a href="mailto:elgacosta218@gmail.com">elgacosta218@gmail.com</a>.
+
+        <p style={{ textAlign: 'center', marginTop: '1rem', textShadow: '1.5px 1.5px white' }}>
+          Se preferir, envie um e-mail para <a href="mailto:elgacosta218@gmail.com">elgacosta218@gmail.com</a>.
         </p>
       </Container>
 
       {sent && <Toast>Mensagem enviada com sucesso!</Toast>}
-    </Section>
+    </ContactWrap>
   );
 }
