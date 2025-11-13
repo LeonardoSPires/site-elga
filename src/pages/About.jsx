@@ -18,6 +18,7 @@ const Grid = styled.div`
 
   @media (max-width: 900px){
     grid-template-columns: 1fr;
+    text-align: center;
   }
 `;
 

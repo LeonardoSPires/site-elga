@@ -17,7 +17,7 @@ const Wrap = styled.div`
 
   @media (max-width: 900px) { 
     background: linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)),
-    url(${heroImg}) right no-repeat;
+    url(${heroImg}) right/cover no-repeat  ;
    }
 `;
 
