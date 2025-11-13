@@ -85,7 +85,7 @@ export default function Hero() {
               <FaInstagram />
             </a>
             <a
-              href="https://vt.tiktok.com/ZSy75f8XC/"
+              href="https://www.tiktok.com/@elgapsic6?_r=1&_t=ZS-91MyDBtzEMT"
               target="_blank"
               rel="noopener noreferrer"
             >
